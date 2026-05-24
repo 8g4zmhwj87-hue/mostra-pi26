@@ -239,7 +239,7 @@
       </div>
       <div class="field">
         <label>PI avaliado <span class="req">*</span></label>
-        <select>
+        <select id="sel-pi">
           <option value="">Selecione...</option>
           <option>PI de Educação Alimentar e Nutricional</option>
           <option>PI de Microbiologia, Higiene, Controle e Legislação de Alimentos</option>
@@ -251,11 +251,11 @@
       </div>
       <div class="field full">
         <label>Título do trabalho <span class="req">*</span></label>
-        <input type="text" placeholder="Título completo do projeto">
+        <input type="text" id="input-titulo" placeholder="Título completo do projeto">
       </div>
       <div class="field full">
         <label>Líder da equipe <span class="req">*</span></label>
-        <input type="text" placeholder="Nome do(a) líder">
+        <input type="text" id="input-lider" placeholder="Nome do(a) líder">
       </div>
     </div>
   </div>
@@ -584,9 +584,9 @@ async function enviar() {
   const avaliadora = sel.value === 'outro'
     ? document.getElementById('input-outro').value.trim()
     : sel.value;
-  const pi = document.querySelectorAll('select')[1].value;
-  const titulo = document.querySelectorAll('input[type="text"]')[0].value.trim();
-  const lider = document.querySelectorAll('input[type="text"]')[1].value.trim();
+  const pi = document.getElementById('sel-pi').value;
+  const titulo = document.getElementById('input-titulo').value.trim();
+  const lider = document.getElementById('input-lider').value.trim();
   const nota = document.getElementById("nota-final").textContent;
   const observacoes = document.querySelector("textarea").value.trim();
 
