@@ -224,13 +224,18 @@
       </div>
       <div class="field">
         <label>Avaliadora <span class="req">*</span></label>
-        <select>
+        <select id="sel-avaliadora" onchange="toggleOutro()">
           <option value="">Selecione...</option>
           <option>Ana Cibele</option>
           <option>Débora Thais</option>
           <option>Ingrid Bispo</option>
           <option>Tamires Soares</option>
+          <option value="outro">Outro</option>
         </select>
+      </div>
+      <div class="field full" id="campo-outro" style="display:none">
+        <label>Nome do(a) avaliador(a) <span class="req">*</span></label>
+        <input type="text" id="input-outro" placeholder="Digite o nome completo">
       </div>
       <div class="field">
         <label>PI avaliado <span class="req">*</span></label>
@@ -566,9 +571,19 @@ function copiarResumo() {
     .catch(()=>alert("Use Ctrl+A e Ctrl+C para copiar manualmente."));
 }
 
+function toggleOutro() {
+  const sel = document.getElementById('sel-avaliadora');
+  const campo = document.getElementById('campo-outro');
+  campo.style.display = sel.value === 'outro' ? 'block' : 'none';
+  if (sel.value !== 'outro') document.getElementById('input-outro').value = '';
+}
+
 async function enviar() {
   const email = document.querySelector('input[type="email"]').value.trim();
-  const avaliadora = document.querySelectorAll('select')[0].value;
+  const sel = document.getElementById('sel-avaliadora');
+  const avaliadora = sel.value === 'outro'
+    ? document.getElementById('input-outro').value.trim()
+    : sel.value;
   const pi = document.querySelectorAll('select')[1].value;
   const titulo = document.querySelectorAll('input[type="text"]')[0].value.trim();
   const lider = document.querySelectorAll('input[type="text"]')[1].value.trim();
@@ -577,6 +592,10 @@ async function enviar() {
 
   if (!email || !avaliadora || !pi || !titulo || !lider) {
     alert("Preencha todos os campos de identificação antes de enviar.");
+    return;
+  }
+  if (sel.value === 'outro' && !document.getElementById('input-outro').value.trim()) {
+    alert("Digite o nome do(a) avaliador(a).");
     return;
   }
   if (nota === "—") {
